@@ -18,7 +18,7 @@ int main() {
     push_back(v, 6);
     push_back(v, 7);
 
-    printf("%d\n", vectorSum(v, 0)); // should print 18
+    printf("%d\n", vectorSum(v, 0));
 
     return 0;
 }
