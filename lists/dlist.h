@@ -7,6 +7,7 @@ typedef struct Node
     struct Node *next;
     struct Node *prev;
 } Node;
+
 typedef struct DList
 {
     Node *head;
@@ -31,4 +32,5 @@ Node *createNode(int val);
 void insertBefore(DList *l, Node *it, Node *val);
 void insertAfter(DList *l, Node *it, Node *val);
 Node *removeAt(DList *l, Node *val);
+
 #endif

@@ -182,14 +182,45 @@ void clear(DList *l)
 
 void insertAfter(DList *l, Node *it, Node *val)
 {
+    if (it == l->tail)
+    {
+        insertEnd(l, val->value);
+        return;
+    }
+
+    val->next = it->next;
+    val->prev = it;
+    it->next->prev = val;
+    it->next = val;
 }
 
 void insertBefore(DList *l, Node *it, Node *val)
 {
+    if(it == l->head) {
+        insertBegin(l, val->value);
+        return;
+    }
+
+    val->next = it;
+    val->prev = it->prev;
+    it->prev->next = val;
+    it->prev = val;
 }
 
 Node *removeAt(DList *l, Node *val)
 {
+    if (val == l->head)
+    {
+        return popFront(l);
+    }
+
+    if (val == l->tail)
+    {
+        return pop(l);
+    }
+
+    val->prev->next = val->next;
+    val->next->prev = val->prev;
 
     return val;
 }
