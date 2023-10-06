@@ -9,8 +9,37 @@
 #include <stdlib.h>
 #include "dlist.h"
 
+int sizeOfList(DList *l)
+{   int size = 0;
+    Node *it = l->head;
+
+    while (it != NULL)
+    {
+        size++;
+        it = it->next;
+    }
+
+    return size;
+}
+
 void InsertionSort(DList *l)
 {
+    int size = sizeOfList(l);
+    int i, j, key;
+
+    for(i = 1; i < size; i++)
+    {
+        key = getAt(l, i)->value;
+        j = i - 1;
+
+        while(j >= 0 && getAt(l, j)->value > key)
+        {
+            getAt(l, j + 1)->value = getAt(l, j)->value;
+            j = j - 1;
+        }
+
+        getAt(l, j + 1)->value = key;
+    }
 }
 
 Node *getMid(DList *l)
