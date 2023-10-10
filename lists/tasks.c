@@ -53,8 +53,24 @@ Node *getMid(DList *l)
     return slow_ptr;
 }
 
-int hasCycle(DList *l)
-{
+int hasCycle(DList *l) {
+
+    if (l == NULL || l->head == NULL) {
+        return 0;
+    }
+
+    Node *slow_ptr = l->head;
+    Node *fast_ptr = l->head;
+
+    while (fast_ptr != NULL && fast_ptr->next != NULL) {
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next->next;
+
+        if (slow_ptr == fast_ptr) {
+            return 1;
+        }
+    }
+
     return 0;
 }
 
