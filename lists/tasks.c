@@ -9,26 +9,13 @@
 #include <stdlib.h>
 #include "dlist.h"
 
-int sizeOfList(DList *l)
-{   int size = 0;
-    Node *it = l->head;
-
-    while (it != NULL)
-    {
-        size++;
-        it = it->next;
-    }
-
-    return size;
-}
-
 void InsertionSort(DList *l)
 {
     if (l->head == NULL)
         return;
     
     Node *it = l->head->next;
-    
+
     while (it != NULL)
     {
         Node *key = it;
@@ -52,7 +39,18 @@ void InsertionSort(DList *l)
 
 Node *getMid(DList *l)
 {
-    return l->head;
+    if (l == NULL || l->head == NULL)
+        return;
+
+    Node *slow_ptr = l->head;
+    Node *fast_ptr = l->head;
+
+    while (fast_ptr != NULL && fast_ptr->next != NULL) {
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next->next;
+    }
+
+    return slow_ptr;
 }
 
 int hasCycle(DList *l)
