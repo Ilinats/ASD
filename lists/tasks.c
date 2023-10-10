@@ -24,21 +24,29 @@ int sizeOfList(DList *l)
 
 void InsertionSort(DList *l)
 {
-    int size = sizeOfList(l);
-    int i, j, key;
-
-    for(i = 1; i < size; i++)
+    if (l->head == NULL)
+        return;
+    
+    Node *it = l->head->next;
+    
+    while (it != NULL)
     {
-        key = getAt(l, i)->value;
-        j = i - 1;
-
-        while(j >= 0 && getAt(l, j)->value > key)
+        Node *key = it;
+        Node *j = it->prev;
+        while (j != NULL && j->value > key->value)
         {
-            getAt(l, j + 1)->value = getAt(l, j)->value;
-            j = j - 1;
+            j->next->value = j->value;
+            j = j->prev;
         }
-
-        getAt(l, j + 1)->value = key;
+        if (j == NULL)
+        {
+            l->head->value = key->value;
+        }
+        else
+        {
+            j->next->value = key->value;
+        }
+        it = it->next;
     }
 }
 
