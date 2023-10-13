@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../vectors/vector.c>"
+#include "../vectors/vector.c"
 
 int isPalindromeStep(vector_t *v, int start, int end) {
     if(start >= end) {
@@ -19,7 +19,6 @@ int isPalindrome(vector_t *v) {
 int main() {
 
     vector_t v;
-    vector_init(&v);
 
     push_back(&v, 1);
     push_back(&v, 2);
