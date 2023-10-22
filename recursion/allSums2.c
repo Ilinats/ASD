@@ -3,22 +3,12 @@
 
 void allSumsRec(int *arr, int index, int sum) {
     if(index == SIZE) {
-        printf("0, ");
-        for(int i = 0; i < SIZE - 1; i ++) {
-            printf("%d + ", arr[i]);
-        }
-        printf("%d: %d", arr[SIZE - 1], sum);
+        printf("%d\n", sum);
         return;
     }
 
-    printf("%d, ", arr[index]);
-    sum += arr[index];
-
-    for(int i = index+1; i < SIZE; i ++) {
-        printf("%d + %d: %d, ", arr[i], arr[index], arr[i]+ arr[index]);
-    }
-
     allSumsRec(arr, index+1, sum);
+    allSumsRec(arr, index+1, sum + arr[index]);
 }
 
 int main() {
