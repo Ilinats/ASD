@@ -40,6 +40,15 @@ void radixSortRec(int *arr, int position, int count) {
         buckets[9 + digit][bucketCounts[9 + digit]++] = arr[i];
     }
 
+    for(int i = 0; i < 19; i++) {
+        for(int j = 0; j < bucketCounts[i]; j++) {
+            printf("%d ", buckets[i][j]);
+        }
+        if(bucketCounts[i])
+            printf("\n");
+    }
+    printf("\n");
+
     int index = 0;
 
     for (int i = 0; i < 19; i++) {
