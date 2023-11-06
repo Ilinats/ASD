@@ -24,7 +24,7 @@ int maxDigits(int * arr, int count) {
 }
 
 void radixSortRec(int *arr, int position, int count) {
-    if (position == 0 || count == 0) {
+    if (position == 0 || count == 1) {
         return;
     }
 
