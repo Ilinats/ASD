@@ -37,6 +37,49 @@ void InsertionSort(DList *l)
     }
 }
 
+void InsertionSort2(vector_t *v)
+{
+    for (int i = 1; i < getSize(v); i++)
+    {
+        int current = getAt(v, i);
+
+        int j = i - 1;
+        for (; j >= 0; j--)
+        {
+            if (current < getAt(v, j))
+            {
+                v->arr[j + 1] = v->arr[j];
+            }
+            else
+            {
+                break;
+            }
+        }
+        v->arr[j + 1] = current;
+    }
+}
+
+void SelectionSort(vector_t *v)
+{
+    for (int j = 0; j < getSize(v); j++)
+    {
+        int min = getAt(v, j);
+        int minIndex = j;
+        for (int i = j; i < getSize(v); i++)
+        {
+            if (getAt(v, i) < min)
+            {
+                min = getAt(v, i);
+                minIndex = i;
+            }
+        }
+
+        int tmp = getAt(v, j);
+        v->arr[j] = v->arr[minIndex];
+        v->arr[minIndex] = tmp;
+    }
+}
+
 Node *getMid(DList *l)
 {
     if (l == NULL || l->head == NULL)
