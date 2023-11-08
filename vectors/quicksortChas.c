@@ -14,6 +14,7 @@ int partition(vector_t *v, int start, int end)
     int pivot = getAt(v, end);
 
     printVector(v);
+    
     while (1)
     {
         while (getAt(v, i) < pivot)
@@ -26,7 +27,7 @@ int partition(vector_t *v, int start, int end)
             return i;
 
         swap(&(v->arr[i]), &(v->arr[j]));
-        
+
         i++;
         j--;
     }
