@@ -52,7 +52,7 @@ void pushBack(Node **list, int data) {
     prev->npx = XOR(newNode, prev->npx);
 }
 
-void printList(Node *list) {
+void printForward(Node *list) {
     Node *curr = list;
     Node *prev = NULL;
     Node *next;
@@ -63,6 +63,27 @@ void printList(Node *list) {
         prev = curr;
         curr = next;
     }
+    printf("\n");
+}
+
+void printBackward(Node *list) {
+    Node *curr = list;
+    Node *prev = NULL;
+    Node *next;
+
+    while (curr != NULL) {
+        next = XOR(prev, curr->npx);
+        prev = curr;
+        curr = next;
+    }
+
+    while (prev != NULL) {
+        printf("%d ", prev->data);
+        next = XOR(curr, prev->npx);
+        curr = prev;
+        prev = next;
+    }
+    printf("\n");
 }
 
 void freeList(Node **list) {

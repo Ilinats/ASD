@@ -10,4 +10,5 @@ void freeList(Node **list);
 
 void pushBack(Node **list, int data);
 void pushFront(Node **list, int data);
-void printList(Node *list);
+void printForward(Node *list);
+void printBackward(Node *list);
