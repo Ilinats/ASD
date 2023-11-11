@@ -1,4 +1,4 @@
-#include "xorlist.c"
+#include "xorlist.h"
 #include <stdio.h>
 
 int main() {
@@ -13,7 +13,8 @@ int main() {
     pushBack(&head, 3);
     pushBack(&head, 5);
 
-    printList(head);
+    printForward(head);
+    printBackward(head);
 
     freeList(&head);
 }
