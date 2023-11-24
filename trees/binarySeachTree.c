@@ -75,12 +75,12 @@ Node *deleteNode(Node *tree, int val) {
     return tree;
 }
 
-void fillVector(Node *tree, Vector *vector) {
+void fillVector(Node *tree, vector_t *vector) {
     if(tree == NULL)
         return;
 
     fillVector(tree->left, vector);
-    push(vector, tree->val);
+    push_back(vector, tree->val);
     fillVector(tree->right, vector);
 }
 
@@ -94,7 +94,7 @@ Node *buildTreeRect(vector_t *v, int start, int end) {
     node->left = buildTreeRect(v, start, mid - 1);
     node->right = buildTreeRect(v, mid + 1, end);
 
-    return root;
+    return node;
 }
 
 Node *buildTree(vector_t *v) {
