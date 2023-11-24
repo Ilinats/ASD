@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include <../vectors/vector.c>
+#include "../vectors/vector.c"
 
 typedef struct Node {
     struct Node *left;
@@ -75,7 +75,34 @@ Node *deleteNode(Node *tree, int val) {
     return tree;
 }
 
+void fillVector(Node *tree, Vector *vector) {
+    if(tree == NULL)
+        return;
 
+    fillVector(tree->left, vector);
+    push(vector, tree->val);
+    fillVector(tree->right, vector);
+}
+
+Node *buildTreeRect(vector_t *v, int start, int end) {
+    if(start > end)
+        return NULL;
+
+    int mid = (start + end) / 2;
+    Node *node = create_node(v->arr[mid]);
+
+    node->left = buildTreeRect(v, start, mid - 1);
+    node->right = buildTreeRect(v, mid + 1, end);
+
+    return root;
+}
+
+Node *buildTree(vector_t *v) {
+    Node *root = NULL;
+    root = buildTreeRect(v, 0, v->size - 1);
+
+    return root;
+}
 
 int max(int a, int b) {
     return (a > b) ? a : b;
