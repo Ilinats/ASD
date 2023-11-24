@@ -18,8 +18,6 @@ int maxDigits(int * arr, int count) {
     return max;
 }
 
-
-
 int getDigit(int num, int position) {
     for (int i = 0; i < position - 1; i++) {
         num /= 10;
