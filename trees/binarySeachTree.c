@@ -125,19 +125,37 @@ void print(Node *tree) {
     print(tree->right);
 }
 
+void printByLevelsHelper(Node *tree, int level) {
+    if(tree == NULL)
+        return;
+
+    if(level == 1)
+        printf("%d ", tree->val);
+    else if(level > 1) {
+        printByLevelsHelper(tree->left, level - 1);
+        printByLevelsHelper(tree->right, level - 1);
+    }
+}
+
+void printByLevels(Node *tree) {
+    printf("%d ", tree->val);
+    int h = height(tree);
+    for(int i = 2; i <= h; i++)
+        printByLevelsHelper(tree, i);
+}
+
 int main() {
-    Node *tree = create_node(5);
-    insertNode(tree, 3);
+    Node *tree = create_node(9);
+    insertNode(tree, 15);
     insertNode(tree, 7);
-    insertNode(tree, 2);
-    insertNode(tree, 4);
+    insertNode(tree, 13);
+    insertNode(tree, 11);
     insertNode(tree, 6);
     insertNode(tree, 8);
 
     print(tree);
-    deleteNode(tree, 5);
     printf("\n");
-    print(tree);
+    printByLevels(tree);
 
     return 0;
 }
