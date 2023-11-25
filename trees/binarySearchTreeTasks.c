@@ -118,8 +118,23 @@ Node *findMax(Node *tree) {
         printf("%d", tree->val);
         return tree;
     }
-    
+
     findMax(tree->right);
+}
+
+int isBSTHelper(Node *node, int min, int max) {
+    if (node == NULL)
+        return 1;
+
+    if (node->val < min || node->val > max)
+        return 0;
+
+    return isBSTHelper(node->left, min, node->val - 1) &&
+           isBSTHelper(node->right, node->val + 1, max);
+}
+
+bool isBST(Node *tree) {
+    return isBSTHelper(tree, findMin(tree), findMax(tree));
 }
 
 int main() {
