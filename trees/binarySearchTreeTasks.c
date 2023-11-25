@@ -198,6 +198,19 @@ int isSameStructure(Node *tree1, Node *tree2) {
 
     return isSameStructure(tree1->left, tree2->left) && isSameStructure(tree1->right, tree2->right);
 }
+
+Node *treeFromArr(int *arr, int start, int end) {
+    if(start > end)
+        return NULL;
+
+    int mid = (start + end) / 2;
+    Node *node = create_node(arr[mid]);
+
+    node->left = treeFromArr(arr, start, mid - 1);
+    node->right = treeFromArr(arr, mid + 1, end);
+
+    return node;
+}
  
 int main() {
     Node *tree = create_node(9);
@@ -217,6 +230,8 @@ int main() {
     insertNode(tree2, 8);
     insertNode(tree2, 10);
 
+    int arr[9] = {1, 3, 5, 8, 15, 21, 23, 25, 28};
+
     print(tree);
     printf("\n");
     printByLevels(tree);
@@ -226,6 +241,12 @@ int main() {
     printf("%d\n", kthSmallest(tree, 3));
     printf("%d\n", kthLargest(tree, 4));
     printf("Same structure? %s\n", isSameStructure(tree, tree2) ? "Yes" : "No");
+
+
+    Node *tree3 = treeFromArr(arr, 0, 8);
+    print(tree3);
+    printf("\n");
+    printByLevels(tree3);
 
     return 0;
 }
