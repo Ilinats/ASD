@@ -17,15 +17,15 @@ Node *create_node(int val) {
     return node;
 }
 
-Node *insert(Node *tree, int val)
+Node *insertNode(Node *tree, int val)
 {
     if (tree == NULL)
         return create_node(val);
 
     if (val < tree->val)
-        tree->left = insert(tree->left, val);
+        tree->left = insertNode(tree->left, val);
     else if (val > tree->val)
-        tree->right = insert(tree->right, val);
+        tree->right = insertNode(tree->right, val);
 
     return tree;
 }
@@ -104,6 +104,24 @@ void printByLevels(Node *tree) {
         printByLevelsHelper(tree, i);
 }
 
+Node *findMin(Node *tree) {
+    if(tree->left == NULL) {
+        printf("%d", tree->val);
+        return tree;
+    }
+
+    findMin(tree->left);
+}
+
+Node *findMax(Node *tree) {
+    if(tree->right == NULL) {
+        printf("%d", tree->val);
+        return tree;
+    }
+    
+    findMax(tree->right);
+}
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -116,6 +134,8 @@ int main() {
     print(tree);
     printf("\n");
     printByLevels(tree);
+    printf("\n");
+    findMin(tree);
 
     return 0;
 }
