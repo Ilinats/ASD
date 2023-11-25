@@ -76,9 +76,8 @@ int height(Node *tree) {
 }
 
 void print(Node *tree) {
-    if(tree == NULL) {
+    if(tree == NULL)
         return;
-    }
 
     print(tree->left);
     printf("%d ", tree->val);
@@ -134,7 +133,10 @@ int isBSTHelper(Node *node, int min, int max) {
 }
 
 void isBST(Node *tree) {
-    int res = isBSTHelper(tree, findMin(tree), findMax(tree));
+    int min = findMin(tree)->val;
+    int max = findMax(tree)->val;
+    
+    int res = isBSTHelper(tree, min, max);
 
     if(res)
         printf("Is BST");
@@ -142,6 +144,29 @@ void isBST(Node *tree) {
         printf("Not BST");
 }
 
+void kthSmallestHelper(Node *root, int k, int *count, int *result) {
+    if (root == NULL || *count >= k)
+        return;
+
+    kthSmallestHelper(root->left, k, count, result);
+    (*count)++;
+
+    if (*count == k) {
+        *result = root->val;
+        return;
+    }
+
+    kthSmallestHelper(root->right, k, count, result);
+}
+
+int kthSmallest(Node *root, int k) {
+    int count = 0;
+    int result = -1;
+    kthSmallestHelper(root, k, &count, &result);
+
+    return result;
+}
+ 
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -156,6 +181,8 @@ int main() {
     printByLevels(tree);
     printf("\n");
     findMin(tree);
+    printf("\n");
+    printf("%d", kthSmallest(tree, 3));
 
     return 0;
 }
