@@ -133,8 +133,13 @@ int isBSTHelper(Node *node, int min, int max) {
            isBSTHelper(node->right, node->val + 1, max);
 }
 
-bool isBST(Node *tree) {
-    return isBSTHelper(tree, findMin(tree), findMax(tree));
+void isBST(Node *tree) {
+    int res = isBSTHelper(tree, findMin(tree), findMax(tree));
+
+    if(res)
+        printf("Is BST");
+    else
+        printf("Not BST");
 }
 
 int main() {
