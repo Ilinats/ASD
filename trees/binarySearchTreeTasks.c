@@ -188,6 +188,16 @@ int kthLargest(Node *root, int k) {
 
     return result;
 }
+
+int isSameStructure(Node *tree1, Node *tree2) {
+    if (tree1 == NULL && tree2 == NULL)
+        return 1;
+
+    if (tree1 == NULL || tree2 == NULL)
+        return 0;
+
+    return isSameStructure(tree1->left, tree2->left) && isSameStructure(tree1->right, tree2->right);
+}
  
 int main() {
     Node *tree = create_node(9);
@@ -198,6 +208,15 @@ int main() {
     insertNode(tree, 6);
     insertNode(tree, 8);
 
+    Node *tree2 = create_node(9);
+    insertNode(tree2, 15);
+    insertNode(tree2, 7);
+    insertNode(tree2, 13);
+    insertNode(tree2, 11);
+    insertNode(tree2, 6);
+    insertNode(tree2, 8);
+    insertNode(tree2, 10);
+
     print(tree);
     printf("\n");
     printByLevels(tree);
@@ -206,6 +225,7 @@ int main() {
     printf("\n");
     printf("%d\n", kthSmallest(tree, 3));
     printf("%d\n", kthLargest(tree, 4));
+    printf("Same structure? %s\n", isSameStructure(tree, tree2) ? "Yes" : "No");
 
     return 0;
 }
