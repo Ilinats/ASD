@@ -30,7 +30,6 @@ Node *insertNode(Node *tree, int val)
     return tree;
 }
 
-
 Node *deleteNode(Node *tree, int val) {
     if(tree == NULL)
         return NULL;
@@ -166,6 +165,29 @@ int kthSmallest(Node *root, int k) {
 
     return result;
 }
+
+void kthLargestHelper(Node *root, int k, int *count, int *result) {
+    if (root == NULL || *count >= k)
+        return;
+
+    kthLargestHelper(root->right, k, count, result);
+    (*count)++;
+
+    if (*count == k) {
+        *result = root->val;
+        return;
+    }
+
+    kthLargestHelper(root->left, k, count, result);
+}
+
+int kthLargest(Node *root, int k) {
+    int count = 0;
+    int result = -1;
+    kthLargestHelper(root, k, &count, &result);
+
+    return result;
+}
  
 int main() {
     Node *tree = create_node(9);
@@ -182,7 +204,8 @@ int main() {
     printf("\n");
     findMin(tree);
     printf("\n");
-    printf("%d", kthSmallest(tree, 3));
+    printf("%d\n", kthSmallest(tree, 3));
+    printf("%d\n", kthLargest(tree, 4));
 
     return 0;
 }
