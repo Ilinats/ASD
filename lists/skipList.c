@@ -79,5 +79,21 @@ void sl_insert(SkipList *list, int val)
     } while (rand() < RAND_MAX / 2 && connectLayer < MAX_LEVEL);
 }
 
-Node *sl_search(SkipList *list, int val);
+Node *sl_search(SkipList *list, int val)
+{
+    Node *it = list->head;
+
+    for (int i = MAX_LEVEL - 1; i >= 0; i--) {
+        while (it->next[i] != NULL && it->next[i]->value < val)
+            it = it->next[i];
+    }
+
+    it = it->next[0];
+
+    if (it != NULL && it->value == val)
+        return it;
+    else
+        return NULL; 
+}
+
 Node *sl_remove(SkipList *list, int val);
