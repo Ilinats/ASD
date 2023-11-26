@@ -102,11 +102,11 @@ Node *sl_remove(SkipList *list, int val)
 
     for (int i = MAX_LEVEL - 1; i >= 0; i--) {
         it[i] = list->head;
+        
         while (it[i]->next[i] != NULL && it[i]->next[i]->value < val)
             it[i] = it[i]->next[i];
     }
 
-    // Check if the value is found before proceeding
     if (it[0]->next[0] != NULL && it[0]->next[0]->value == val) {
         Node *removedNode = it[0]->next[0];
 
@@ -118,8 +118,6 @@ Node *sl_remove(SkipList *list, int val)
         }
 
         return removedNode;
-    } else {
-        // Value not found, return NULL or handle accordingly
+    } else
         return NULL;
-    }
 }
