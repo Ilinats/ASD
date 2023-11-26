@@ -120,6 +120,23 @@ Node *findMax(Node *tree) {
     findMax(tree->right);
 }
 
+int hasSum(Node* tree, int currentSum, int target) {
+    if (tree == NULL) {
+        return; 
+    }
+
+    currentSum += tree->val;
+
+    if (currentSum == target) {
+        return;
+    }
+
+    int leftResult = hasSum(tree->left, currentSum, target);
+    int rightResult = hasSum(tree->right, currentSum, target);
+
+    return leftResult || rightResult;
+}
+
 void deleteAllLeaves(Node *tree) {
     if (tree == NULL)
         return;
@@ -246,7 +263,7 @@ int main() {
     insertNode(tree2, 11);
     insertNode(tree2, 6);
     insertNode(tree2, 8);
-    insertNode(tree2, 10);
+    insertNode(tree2, 16);
 
     int arr[9] = {1, 3, 5, 8, 15, 21, 23, 25, 28};
 
@@ -267,6 +284,9 @@ int main() {
     print(tree3);
     printf("\n");
     printByLevels(tree3);
+    printf("\n");
+    printf("%d\n", hasSum(tree2, 0, 24));
+    printf("%d\n", hasSum(tree2, 0, 32));
 
     return 0;
 }
