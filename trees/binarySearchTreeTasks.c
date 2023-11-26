@@ -120,6 +120,24 @@ Node *findMax(Node *tree) {
     findMax(tree->right);
 }
 
+void deleteAllLeaves(Node *tree) {
+    if (tree == NULL)
+        return;
+
+    deleteAllLeaves(tree->left);
+    deleteAllLeaves(tree->right);
+
+    if (tree->left != NULL) {
+        free(tree->left);
+        tree->left = NULL;
+    } 
+    
+    if (tree->right != NULL) {
+        free(tree->right);
+        tree->right = NULL;
+    }
+}
+
 int isBSTHelper(Node *node, int min, int max) {
     if (node == NULL)
         return 1;
@@ -233,15 +251,17 @@ int main() {
     int arr[9] = {1, 3, 5, 8, 15, 21, 23, 25, 28};
 
     print(tree);
-    printf("\n");
+    printf("\nBy levels: ");
     printByLevels(tree);
-    printf("\n");
+    printf("\nSmallest number: ");
     findMin(tree);
     printf("\n");
-    printf("%d\n", kthSmallest(tree, 3));
-    printf("%d\n", kthLargest(tree, 4));
+    printf("Smallest k-th: %d\n", kthSmallest(tree, 3));
+    printf("Largest k-th: %d\n", kthLargest(tree, 4));
     printf("Same structure? %s\n", isSameStructure(tree, tree2) ? "Yes" : "No");
-
+    deleteAllLeaves(tree);
+    print(tree);
+    printf("\n");
 
     Node *tree3 = treeFromArr(arr, 0, 8);
     print(tree3);
