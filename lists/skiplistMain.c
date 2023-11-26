@@ -30,5 +30,10 @@ int main()
     else
         printf("Not found\n");
 
+    sl_remove(list, 3);
+    printList(list);
+    sl_remove(list, -10);
+    printList(list);
+
     clear(list);
 }
