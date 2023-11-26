@@ -16,5 +16,19 @@ int main()
     sl_insert(list, 5);
 
     printList(list);
+
+    Node *result = sl_search(list, 127);
+    Node *result2 = sl_search(list, 100);
+
+    if (result != NULL)
+        printf("\nFound %d\n", result->value);
+    else
+        printf("Not found\n");
+    
+    if (result2 != NULL)
+        printf("Found %d\n", result2->value);
+    else
+        printf("Not found\n");
+
     clear(list);
 }
