@@ -33,7 +33,7 @@ int balanceFactor(Node *tree) {
     return height(tree->left) - height(tree->right);
 }
 
-Node *leftRotation(Node *tree) {
+Node *rightRotation(Node *tree) {
     Node *leftTree = tree->left;
     Node *leftRightTree = leftTree->right;
 
@@ -46,7 +46,7 @@ Node *leftRotation(Node *tree) {
     return leftTree;
 }
 
-Node *rightRotation(Node *tree) {
+Node *leftRotation(Node *tree) {
     Node *rightTree = tree->right;
     Node *rightLeftTree = rightTree->left;
 
@@ -88,7 +88,7 @@ Node *insertNode(Node *root, int val)
         root->left = leftRotation(root->left);
         return rightRotation(root);
     }
-    
+
     return root;
 }
 
