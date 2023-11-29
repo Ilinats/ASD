@@ -147,12 +147,12 @@ void printTree2(Node *root)
 
 int main() {
     Node *tree = create_node(5);
-    insertNode(tree, 3);
-    insertNode(tree, 7);
-    insertNode(tree, 2);
-    insertNode(tree, 4);
-    insertNode(tree, 6);
-    insertNode(tree, 8);
+    tree = insertNode(tree, 3);
+    tree =insertNode(tree, 7);
+    tree =insertNode(tree, 2);
+    tree =insertNode(tree, 4);
+    tree =insertNode(tree, 6);
+    tree =insertNode(tree, 8);
 
     print(tree);
     deleteNode(tree, 5);
