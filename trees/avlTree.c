@@ -29,6 +29,10 @@ int height(Node *tree) {
     return tree->height;
 }
 
+int balanceFactor(Node *tree) {
+    return height(tree->left) - height(tree->right);
+}
+
 Node *leftRotation(Node *tree) {
     Node *leftTree = tree->left;
     Node *leftRightTree = leftTree->right;
@@ -68,6 +72,23 @@ Node *insertNode(Node *root, int val)
 
     root->height = 1 + max(height(root->left), height(root->right));
 
+    int balance = balanceFactor(root);
+    
+    if(balance < -1) {
+        if(val > root->right->val)
+            return leftRotation(root);
+
+        root->right = rightRotation(root->right);
+        return leftRotation(root);
+
+    } else if(balance > 1) {
+        if(val < root->left->val)
+            return rightRotation(root);
+
+        root->left = leftRotation(root->left);
+        return rightRotation(root);
+    }
+    
     return root;
 }
 

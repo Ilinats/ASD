@@ -122,13 +122,13 @@ Node *findMax(Node *tree) {
 
 int hasSum(Node* tree, int currentSum, int target) {
     if (tree == NULL) {
-        return; 
+        return 0; 
     }
 
     currentSum += tree->val;
 
     if (currentSum == target) {
-        return;
+        return 1;
     }
 
     int leftResult = hasSum(tree->left, currentSum, target);
