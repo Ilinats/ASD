@@ -14,6 +14,13 @@ BinaryHeap *createHeap() {
     return tmp;
 }
 
+void push_back(BinaryHeap *heap, int val) {
+    heap->size++;
+
+    heap->arr = (int *)realloc(heap->arr, (heap->size) * sizeof(int));
+    heap->arr[heap->size - 1] = val;
+}
+
 void printHeap(BinaryHeap *heap) {
     for(int i = 0; i < heap->size; i++)
         printf("%d ", heap->arr[i]);
@@ -50,10 +57,14 @@ BinaryHeap *heapify(int *arr) {
     return heap;
 };
 
+void siftUp (BinaryHeap *heap, int index) {
+}
+
 int main() {
     int arr[SIZE] = {3, 18, 39, 5, 6, 33, 90, 23487, 1234, 12352, 800,  700, 500, 400, 900, 1909000};
 
     BinaryHeap *heap = heapify(arr);
-    
+    push_back(heap, 1000000);
+
     return 0;
 }
