@@ -67,17 +67,17 @@ BinaryHeap *heapify(int *arr) {
     return heap;
 };
 
-void siftDown(BinaryHeap *heap, int index) {
+void siftDown(BinaryHeap *heap, int index, int size) {
     int temp = heap->arr[index];
     heap->arr[index] = heap->arr[0];
     heap->arr[0] = temp;
 
     int tempIndex = 0;
 
-    while(2 * tempIndex + 1 < heap->size) {
+    while(2 * tempIndex + 1 < size) {
         int child1 = 2 * tempIndex + 1;
 
-        if(child1 + 1 < heap->size && heap->arr[child1 + 1] > heap->arr[child1])
+        if(child1 + 1 < size && heap->arr[child1 + 1] > heap->arr[child1])
             child1++;
 
         if(heap->arr[tempIndex] < heap->arr[child1]) {
@@ -90,11 +90,23 @@ void siftDown(BinaryHeap *heap, int index) {
     }
 }
 
+BinaryHeap *heapSort(int *arr, int count) {
+    BinaryHeap *heap = heapify(arr);
+    int size = heap->size;
+
+    for(int i = count - 1; i > 0; i--){
+        siftDown(heap, i, --size);
+        printHeap(heap);
+    }
+
+    return heap;
+}
+
 int main() {
     int arr[SIZE] = {3, 18, 39, 5, 6, 33, 90, 23487, 1234, 12352, 800,  700, 500, 400, 900, 1909000};
 
-    BinaryHeap *heap = heapify(arr);
-    siftDown(heap, heap->size - 1);
+    BinaryHeap *heap = heapSort(arr, SIZE);
+    printHeap(heap);
 
     return 0;
 }
