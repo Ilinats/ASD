@@ -67,7 +67,7 @@ BinaryHeap *heapify(int *arr) {
     return heap;
 };
 
-void siftUp (BinaryHeap *heap, int index) {
+void siftDown(BinaryHeap *heap, int index) {
     int temp = heap->arr[index];
     heap->arr[index] = heap->arr[0];
     heap->arr[0] = temp;
@@ -88,17 +88,13 @@ void siftUp (BinaryHeap *heap, int index) {
         } else
             break;
     }
-
-    printHeap(heap);
 }
 
 int main() {
     int arr[SIZE] = {3, 18, 39, 5, 6, 33, 90, 23487, 1234, 12352, 800,  700, 500, 400, 900, 1909000};
 
     BinaryHeap *heap = heapify(arr);
-    push_back(heap, 1000);
-    printHeap(heap);
-    siftUp(heap, heap->size - 1);
+    siftDown(heap, heap->size - 1);
 
     return 0;
 }
