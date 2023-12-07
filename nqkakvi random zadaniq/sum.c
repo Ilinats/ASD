@@ -59,6 +59,31 @@ void mergeSort(int *arr, int size) {
     merge(arr, left, right, mid, size - mid);
 }
 
+int binarySearch(int *arr, int target, int start, int end) {
+    if(start > end) {
+        return 0;
+    };
+
+    int mid = (start + end) / 2;
+
+    if(arr[mid] == target)
+        return 1;
+
+    else if(arr[mid] > target)
+        return binarySearch(arr, target, start, mid - 1);
+
+    else
+        return binarySearch(arr, target, mid + 1, end);
+}
+
+int checkSum(int *arr, int size, int target) {
+    for(int i = 0; i < size; i++) {
+        if(binarySearch(arr, target - arr[i], 0, size - 1))
+            return 1;
+    }
+    return 0;
+}
+
 int main() {
 
     int arr[SIZE] = {3, 5, 12, 54, 6, 34, 0, 7, 13, 76};
@@ -67,6 +92,10 @@ int main() {
     for(int i = 0; i < SIZE; i++) {
         printf("%d ", arr[i]);
     }
+
+    printf("\n%d", checkSum(arr, SIZE, 11));
+    printf("\n%d", checkSum(arr, SIZE, 111));
+    printf("\n%d", checkSum(arr, SIZE, 103));
 
     return 0;
 }
