@@ -53,7 +53,7 @@ BinaryHeap *heapify(int *arr, int size) {
                 int tmp = arr[temp];
                 arr[temp] = arr[child1];
                 arr[child1] = tmp;
-                temp = child1; // преместване на индекса на родителя на по-голямото дете
+                temp = child1; // преместване на индекса на родителя на по-голямото дете, което отива на неговото място
             } else
                 break;
         }
@@ -68,9 +68,24 @@ BinaryHeap *heapify(int *arr, int size) {
 void siftDown(BinaryHeap *heap, int index, int size) {
     int temp = heap->arr[index];
     heap->arr[index] = heap->arr[0];
-    heap->arr[0] = temp; // размяна на стойностите на първия елемент с последния
+    heap->arr[0] = temp; // размяна на стойностите на първия елемент с последния незамразен елемент
 
-    heap = heapify(heap->arr, size); // пренареждане на масива до heap
+    int i = 0;
+    int child1 = 2 * i + 1;
+
+    while(child1 < size) {
+        if(child1 + 1 < size && heap->arr[child1 + 1] > heap->arr[child1]) // проверка дали има второ дете и дали е по-голямо от първото
+            child1++;
+
+        if(heap->arr[i] < heap->arr[child1]) { // проверка дали родителят е по-малък от по-голямото дете и ако е разменяме стойностите им
+            int tmp = heap->arr[i];
+            heap->arr[i] = heap->arr[child1];
+            heap->arr[child1] = tmp;
+            i = child1; // преместване на индекса на родителя на по-голямото дете, което отива на неговото място
+            child1 = 2 * i + 1;
+        } else
+            break;
+    }
 }
 
 BinaryHeap *heapSort(int *arr, int count) {
@@ -84,6 +99,10 @@ BinaryHeap *heapSort(int *arr, int count) {
 
     return heap;
 }
+
+/*Сложността на heap sort-a е О(nlogn). Първото n идва от for цикъла за обхожадане на всички елементи. 
+Logn идва от размяната на последния и първия елемент в siftDown функция и пренареждането на масива до heap. Heapify 
+функцията има сложност n, която ние използваме само веднъж, тоест може да бъде пренебрегната*/
 
 int main() {
     int arr[SIZE] = {3, 18, 39, 5, 6, 33, 90, 23487, 1234, 12352, 800,  700, 500, 400, 900, 1909000};
