@@ -2,7 +2,7 @@
 1, ако има два различни елемента на А със сума т,
 0, ако няма такива елементи.*/
 
-#include <stdlib.h>
+#include <stdio.h>
 #define SIZE 10
 
 void merge(int *arr, int left[], int right[], int leftSize, int rightSize) {
@@ -62,8 +62,11 @@ void mergeSort(int *arr, int size) {
 int main() {
 
     int arr[SIZE] = {3, 5, 12, 54, 6, 34, 0, 7, 13, 76};
-
     mergeSort(arr, SIZE);
+
+    for(int i = 0; i < SIZE; i++) {
+        printf("%d ", arr[i]);
+    }
 
     return 0;
 }
