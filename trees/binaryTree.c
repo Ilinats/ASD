@@ -1,13 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*AVL дърво: Максималната височина за 12 върха е 5. 
+Връзка между височината и минималният брой върхове: T(h+1) = T(h) + T(h-1) + 1 ~ 1.44logn ~ O(logn)
+Времето за търсене за 2^n дърво: O(log2^n) = O(n)
+А за n*2^n = O(logn + n) = O(n)*/
+
 typedef struct tree {
     int value;
     struct tree* left;
     struct tree* right;
 } tree;
 
-void flattenTree(tree* root) {
+void flattenTree2(tree* root) {
     while (root != NULL) {
         if (root->left != NULL) {
             tree* temp = root->left;
@@ -23,6 +28,31 @@ void flattenTree(tree* root) {
 
         root = root->right;
     }
+}
+
+tree *flattenTree(tree *root) {
+    if(root == NULL)
+        return NULL;
+
+    if(root->left == NULL && root->right == NULL)
+        return root;
+    
+    if(root->left == NULL)
+        return flattenTree(root->right);
+
+    if(root->right == NULL) {
+        root->right = root->left;
+        return flattenTree(root->right);
+    }
+
+    tree* leftEnd = flattenTree(root->left);
+    tree* rightEnd = flattenTree(root->right);
+
+    leftEnd->right = root->right;
+    root->right = root->left;
+    root->left = NULL;
+
+    return rightEnd;
 }
 
 tree* createNode(int value) {
@@ -50,7 +80,7 @@ int main() {
     root->right = createNode(5);
     root->right->right = createNode(6);
 
-    flattenTree(root);
+    root = flattenTree(root);
     printf("Flattened tree: ");
     printPreorder(root);
 

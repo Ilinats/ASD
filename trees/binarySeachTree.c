@@ -160,6 +160,16 @@ Node* buildFromPostOrder(int *arr, int start, int end) {
     return tree;
 }
 
+void printPostorder(Node* tree) {
+    if(tree == NULL)
+        return;
+
+    printPostorder(tree->left);
+    printPostorder(tree->right);
+
+    printf("%d ", tree->val);
+}
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -169,16 +179,17 @@ int main() {
     insertNode(tree, 6);
     insertNode(tree, 8);
 
-    //int arr[16] = {0, 1, 4, 6, 9, 5, 17, 16, 25, 27, 44, 42, 56, 34, 20, 10};
-    int arr[16] = {0, 1, 4, 34, 20, 10};
+    int arr[16] = {0, 1, 4, 6, 9, 5, 17, 16, 25, 27, 44, 42, 56, 34, 20, 10};
     Node *tree2;
-    //tree2 = buildFromPostOrder(arr, 0, 14, arr[15]);
-    tree2 = buildFromPostOrder(arr, 0, 5);
+    tree2 = buildFromPostOrder(arr, 0, 15);
     print(tree2);
+    printf("\n");
+    printPostorder(tree2);
+    printf("\n");
 
-    // print(tree);
-    // printf("\n");
-    // printByLevels(tree);
+    print(tree);
+    printf("\n");
+    printByLevels(tree);
 
     return 0;
 }
