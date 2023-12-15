@@ -72,6 +72,28 @@ void printPreorder(tree* root) {
     }
 }
 
+tree* buildTree(int* inorder, int* preorder, int *rootIndex, int start, int end) {
+    
+    if (start > end)
+        return NULL;
+
+    tree* root = createNode(preorder[(*rootIndex)]);
+    int targetPos;
+
+    for (int i = start; i <= end; i++)
+        if (inorder[i] == root->value) {
+            targetPos = i;
+            break;
+        }
+
+    (*rootIndex)++;
+
+    root->left = buildTree(inorder, preorder, rootIndex, start, targetPos - 1);
+    root->right = buildTree(inorder, preorder, rootIndex, targetPos + 1, end);
+
+    return root;
+}
+
 int main() {
 
     tree* root = createNode(1);
@@ -84,6 +106,15 @@ int main() {
     flatten(root);
     printf("Flattened tree: ");
     printPreorder(root);
+    printf("\n");
+
+    tree* root2;
+    int preorder[18] = {0, 1, 6, 8, 9, 10, 11, 7, 2, 4, 5, 3, 13, 14, 15, 16, 17, 12};
+    int inorder[18] = {1, 10, 9, 11, 8, 6, 7, 0, 4, 5, 2, 14, 13, 17, 16, 15, 3, 12};
+
+    int rootIndex = 0;
+    root2 = buildTree(inorder, preorder, &rootIndex, 0, 17);
+    printPreorder(root2);
 
     return 0;
 }
