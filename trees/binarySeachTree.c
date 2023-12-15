@@ -144,6 +144,22 @@ void printByLevels(Node *tree) {
         printByLevelsHelper(tree, i);
 }
 
+Node* buildFromPostOrder(int *arr, int start, int end) {
+    if(start > end)
+        return NULL;
+
+    Node* tree = create_node(arr[end]);
+    int mid = end - 1;
+
+    while(arr[mid] > tree->val && mid >= start)
+        mid--;
+    
+    tree->left = buildFromPostOrder(arr, start, mid);
+    tree->right = buildFromPostOrder(arr, mid + 1, end - 1);
+
+    return tree;
+}
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -153,9 +169,16 @@ int main() {
     insertNode(tree, 6);
     insertNode(tree, 8);
 
-    print(tree);
-    printf("\n");
-    printByLevels(tree);
+    //int arr[16] = {0, 1, 4, 6, 9, 5, 17, 16, 25, 27, 44, 42, 56, 34, 20, 10};
+    int arr[16] = {0, 1, 4, 34, 20, 10};
+    Node *tree2;
+    //tree2 = buildFromPostOrder(arr, 0, 14, arr[15]);
+    tree2 = buildFromPostOrder(arr, 0, 5);
+    print(tree2);
+
+    // print(tree);
+    // printf("\n");
+    // printByLevels(tree);
 
     return 0;
 }
