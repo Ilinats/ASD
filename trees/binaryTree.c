@@ -30,23 +30,24 @@ void flattenTree2(tree* root) {
     }
 }
 
-tree *flattenTree(tree *root) {
-    if(root == NULL)
+tree *flatten(tree *root) {
+
+    if (root == NULL)
         return NULL;
 
-    if(root->left == NULL && root->right == NULL)
+    if (root->left == NULL && root->right == NULL)
         return root;
-    
-    if(root->left == NULL)
-        return flattenTree(root->right);
 
-    if(root->right == NULL) {
+    if (root->left == NULL)
+        return flatten(root->right);
+        
+    if (root->right == NULL) {
         root->right = root->left;
-        return flattenTree(root->right);
+        return flatten(root->right);
     }
 
-    tree* leftEnd = flattenTree(root->left);
-    tree* rightEnd = flattenTree(root->right);
+    tree *leftEnd = flatten(root->left);
+    tree *rightEnd = flatten(root->right);
 
     leftEnd->right = root->right;
     root->right = root->left;
@@ -80,7 +81,7 @@ int main() {
     root->right = createNode(5);
     root->right->right = createNode(6);
 
-    root = flattenTree(root);
+    flatten(root);
     printf("Flattened tree: ");
     printPreorder(root);
 
