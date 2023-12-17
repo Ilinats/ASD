@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../vectors/vector.c"
+#define SIZE 9
 
 typedef struct Node {
     struct Node *left;
@@ -194,6 +194,25 @@ void commonPredecessorHelper(Node* tree) {
     printf("%d\n", temp->val);
 }
 
+int isHeapFromArr(int* arr) {
+    int parent = 0;
+
+    while(parent < SIZE) {
+        int child = 2*parent + 1;
+
+        if(child < SIZE && child+1 < SIZE)
+            if(arr[child] < arr[child+1])
+                child ++;
+
+        if(child < SIZE && arr[parent] < arr[child])
+            return 0;
+        else 
+            parent++;
+    }
+
+    return 1;
+}
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -236,7 +255,13 @@ int main() {
     Node* next = successor(temp);
     Node* prev = predecessor(temp);
     printf("%d, %d\n", prev->val, next->val);
+
     commonPredecessorHelper(tree);
+
+    int arr2[SIZE] = {50, 25, 56, 20, 34, 65, 5, 24, 27};
+    printf("Is heap?: %s\n", isHeapFromArr(arr2) ? "Yes" : "No");
+    int arr3[SIZE] = {50, 25, 32, 20, 13, 23, 5, 2, 1};
+    printf("Is heap?: %s\n", isHeapFromArr(arr3) ? "Yes" : "No");
 
     return 0;
 }
