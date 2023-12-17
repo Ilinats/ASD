@@ -111,6 +111,13 @@ Node* findMax(Node* tree) {
     findMax(tree->right);
 }
 
+Node *findMin(Node *tree) {
+    if(tree->left == NULL)
+        return tree;
+
+    findMin(tree->left);
+}
+
 Node* predecessor(Node* tree) {
     if (tree->left != NULL)
         return findMax(tree->left);
@@ -122,6 +129,19 @@ Node* predecessor(Node* tree) {
     }
     
     return parent;
+}
+
+Node* successor(Node* tree) {
+    if(tree->right != NULL)
+        return findMin(tree->right);
+
+    Node* parent = tree->parent;
+    while (parent != NULL && tree == parent->right) {
+        tree = parent;
+        parent = parent->parent;
+    }
+    
+    return parent->left;
 }
 
 int main() {
@@ -163,9 +183,9 @@ int main() {
     printf("\nIs heap?: %s\n", isHeap(tree3) ? "Yes" : "No");
 
     Node* temp = getNodeByVal(tree, 9);
-    //Node* successor = successor(temp);
-    Node* pred = predecessor(temp);
-    printf("%d ", pred->val);
+    Node* next = successor(temp);
+    Node* prev = predecessor(temp);
+    printf("%d, %d\n", prev->val, next->val);
 
     return 0;
 }
