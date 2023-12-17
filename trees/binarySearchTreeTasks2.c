@@ -96,6 +96,20 @@ int sumInInterval(Node* tree, int* arr, int* sum) {
     return *sum;
 }
 
+void bstToGst(Node* tree, int* sum) {
+    if(tree == NULL)
+        return;
+        
+    if(tree->right != NULL)
+        bstToGst(tree->right, sum);
+
+    (*sum) += tree->val;
+    tree->val = *sum - tree->val;
+    bstToGst(tree->left, sum);
+
+    return;
+}
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -106,9 +120,23 @@ int main() {
     insertNode(tree, 8);
     insertNode(tree, 17);
 
+    Node *tree2 = create_node(9);
+    insertNode(tree2, 15);
+    insertNode(tree2, 7);
+    insertNode(tree2, 13);
+    insertNode(tree2, 11);
+    insertNode(tree2, 6);
+    insertNode(tree2, 8);
+    insertNode(tree2, 17);
+
     int arr[2] = {11, 17};
     int sum = 0;
     printf("%d\n", sumInInterval(tree, arr, &sum));
+
+    sum = 0;
+    bstToGst(tree2, &sum);
+    print(tree2);
+    printf("\n");
 
     print(tree);
 
