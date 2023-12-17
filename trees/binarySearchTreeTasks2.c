@@ -110,6 +110,22 @@ void bstToGst(Node* tree, int* sum) {
     return;
 }
 
+int isHeap(Node* tree) {
+    if(tree == NULL)
+        return 1;
+
+    if(tree->left != NULL && tree->left->val > tree->val)
+        return 0;
+
+    if(tree->right != NULL && tree->right->val > tree->val)
+        return 0;
+
+    if(!(isHeap(tree->left) && isHeap(tree->right)))
+        return 0;
+
+    return 1;
+}
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -129,6 +145,13 @@ int main() {
     insertNode(tree2, 8);
     insertNode(tree2, 17);
 
+    Node *tree3 = create_node(100);
+    tree3->left = create_node(19);
+    tree3->right = create_node(36);
+    tree3->left->left = create_node(17);
+    tree3->left->right = create_node(3);
+    tree3->right->right = create_node(1);
+
     int arr[2] = {11, 17};
     int sum = 0;
     printf("%d\n", sumInInterval(tree, arr, &sum));
@@ -136,9 +159,8 @@ int main() {
     sum = 0;
     bstToGst(tree2, &sum);
     print(tree2);
-    printf("\n");
-
-    print(tree);
+    printf("\nIs heap?: %s", isHeap(tree) ? "Yes" : "No");
+    printf("\nIs heap?: %s\n", isHeap(tree3) ? "Yes" : "No");
 
     return 0;
 }
