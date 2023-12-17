@@ -5,6 +5,7 @@
 typedef struct Node {
     struct Node *left;
     struct Node *right;
+    struct Node *parent;
     int val;
 } Node;
 
@@ -13,6 +14,7 @@ Node *create_node(int val) {
     node->left = NULL;
     node->right = NULL;
     node->val = val;
+    node->parent == NULL;
 
     return node;
 }
@@ -22,56 +24,16 @@ Node *insertNode(Node *tree, int val)
     if (tree == NULL)
         return create_node(val);
 
-    if (val < tree->val)
+    if (val < tree->val) {
         tree->left = insertNode(tree->left, val);
-    else if (val > tree->val)
+        tree->left->parent = tree;
+    }
+    else if (val > tree->val) {
         tree->right = insertNode(tree->right, val);
+        tree->right->parent = tree;
+    }
 
     return tree;
-}
-
-Node *deleteNode(Node *tree, int val) {
-    if(tree == NULL)
-        return NULL;
-
-    if(tree->val == val) {
-        if(tree->left == NULL){
-            Node *temp = tree;
-            tree = tree->right;
-            free(temp);
-        } else if(tree->right == NULL) {
-            Node *temp = tree;
-            tree = tree->left;
-            free(temp);
-        } else {
-            Node *rightTree = tree->right;
-
-            while(rightTree->left != NULL)
-                rightTree = rightTree->left;
-
-            tree->val = rightTree->val;
-            tree->right = deleteNode(tree->right, rightTree->val);
-        }
-
-        return tree;
-
-    } else if(tree->val > val)  
-        tree->left = deleteNode(tree->left, val);
-    else if(tree->val < val)
-        tree->right = deleteNode(tree->right, val);
-
-    return tree;
-}
-
-int max(int a, int b) {
-    return (a > b) ? a : b;
-}
-
-int height(Node *tree) {
-    if(tree == NULL)
-        return 0;
-
-    return 1 + max(height(tree->left), height(tree->right));
 }
 
 void print(Node *tree) {
@@ -158,6 +120,8 @@ int main() {
 
     sum = 0;
     bstToGst(tree2, &sum);
+    print(tree);
+    printf("\n");
     print(tree2);
     printf("\nIs heap?: %s", isHeap(tree) ? "Yes" : "No");
     printf("\nIs heap?: %s\n", isHeap(tree3) ? "Yes" : "No");
