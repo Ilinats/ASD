@@ -19,6 +19,33 @@ Node *create_node(int val) {
     return node;
 }
 
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+int height(Node *tree) {
+    if(tree == NULL)
+        return 0;
+
+    return 1 + max(height(tree->left), height(tree->right));
+}
+
+int heightFromRoot(Node* tree, Node* target) {
+    if (tree == NULL)
+        return 0;
+
+    if (tree == target)
+        return 1;
+
+    int leftHeight = heightFromRoot(tree->left, target);
+    int rightHeight = heightFromRoot(tree->right, target);
+
+    if (leftHeight > 0 || rightHeight > 0)
+        return 1 + max(leftHeight, rightHeight);
+    else
+        return 0;
+}
+
 Node *insertNode(Node *tree, int val)
 {
     if (tree == NULL)
@@ -144,6 +171,29 @@ Node* successor(Node* tree) {
     return parent->left;
 }
 
+Node* commonPredecessor(Node* node1, Node* node2, Node* tree) {
+    int height1 = heightFromRoot(tree, node1);
+    int height2 = heightFromRoot(tree, node2);
+
+    if(height1 == height2 && node1 != NULL && node2 != NULL) {
+        if(node1->val == node2->val)
+            return node1;
+        else
+            commonPredecessor(node1->parent, node2->parent, tree);
+    }
+    else if(height1 > height2)
+        commonPredecessor(node1->parent, node2, tree);
+    else if(height2 > height1)
+        commonPredecessor(node1, node2->parent, tree);
+}
+
+void commonPredecessorHelper(Node* tree) {
+    Node* node1 = getNodeByVal(tree, 11);
+    Node* node2 = getNodeByVal(tree, 17);
+    Node* temp = commonPredecessor(node1, node2, tree);
+    printf("%d\n", temp->val);
+}
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -186,6 +236,7 @@ int main() {
     Node* next = successor(temp);
     Node* prev = predecessor(temp);
     printf("%d, %d\n", prev->val, next->val);
+    commonPredecessorHelper(tree);
 
     return 0;
 }

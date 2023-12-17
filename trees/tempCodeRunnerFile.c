@@ -1,0 +1,2 @@
+
+    insertNode(tree, 6);
