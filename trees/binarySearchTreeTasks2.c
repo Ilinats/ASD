@@ -30,6 +30,12 @@ int height(Node *tree) {
     return 1 + max(height(tree->left), height(tree->right));
 }
 
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
 int heightFromRoot(Node* tree, Node* target) {
     if (tree == NULL)
         return 0;
@@ -213,6 +219,30 @@ int isHeapFromArr(int* arr) {
     return 1;
 }
 
+void insertInHeap(int *heap, int size, int value) {
+    if (size == 0) {
+        printf("Heap is full\n");
+        return;
+    }
+
+    int i = size;
+    heap[i] = value;
+
+    while (i > 0 && heap[(i - 1) / 2] < heap[i]) {
+        swap(&heap[i], &heap[(i - 1) / 2]);
+        i = (i - 1) / 2;
+    }
+}
+
+void mergeHeaps(int *heap1, int *heap2, int *heap3) {
+    for (int i = 0; i < SIZE; i++)
+        heap3[i] = heap1[i];
+
+    for (int i = 0; i < SIZE; i++)
+        insertInHeap(heap3, SIZE + i, heap2[i]);
+}
+
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -262,6 +292,17 @@ int main() {
     printf("Is heap?: %s\n", isHeapFromArr(arr2) ? "Yes" : "No");
     int arr3[SIZE] = {50, 25, 32, 20, 13, 23, 5, 2, 1};
     printf("Is heap?: %s\n", isHeapFromArr(arr3) ? "Yes" : "No");
+
+    int heap1[SIZE] = {9, 7, 8, 5, 6, 4, 3, 1, 2};
+    int heap2[SIZE] = {8, 7, 6, 5, 4, 3, 2, 1, 0};
+    int heap3[SIZE * 2];
+    mergeHeaps(heap1, heap2, heap3);
+    printf("Merged Heap: ");
+    for (int i = 0; i < SIZE * 2; i++)
+        printf("%d ", heap3[i]);
+    printf("\n");
+
+    printf("Is heap?: %s\n", isHeapFromArr(heap3) ? "Yes" : "No");
 
     return 0;
 }
