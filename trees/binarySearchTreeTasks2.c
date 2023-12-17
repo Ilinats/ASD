@@ -88,6 +88,42 @@ int isHeap(Node* tree) {
     return 1;
 }
 
+Node* getNodeByVal(Node* tree, int val) {
+    if(tree == NULL)
+        return NULL;
+
+    if(tree->val == val) 
+        return tree;
+
+    Node* leftResult = getNodeByVal(tree->left, val);
+
+    if(leftResult != NULL)
+        return leftResult;
+
+    Node* rightResult = getNodeByVal(tree->right, val);
+    return rightResult;
+}
+
+Node* findMax(Node* tree) {
+    if(tree->right == NULL)
+        return tree;
+
+    findMax(tree->right);
+}
+
+Node* predecessor(Node* tree) {
+    if (tree->left != NULL)
+        return findMax(tree->left);
+
+    Node* parent = tree->parent;
+    while (parent != NULL && tree == parent->left) {
+        tree = parent;
+        parent = parent->parent;
+    }
+    
+    return parent;
+}
+
 int main() {
     Node *tree = create_node(9);
     insertNode(tree, 15);
@@ -125,6 +161,11 @@ int main() {
     print(tree2);
     printf("\nIs heap?: %s", isHeap(tree) ? "Yes" : "No");
     printf("\nIs heap?: %s\n", isHeap(tree3) ? "Yes" : "No");
+
+    Node* temp = getNodeByVal(tree, 9);
+    //Node* successor = successor(temp);
+    Node* pred = predecessor(temp);
+    printf("%d ", pred->val);
 
     return 0;
 }
