@@ -1,3 +1,7 @@
 
 hw1/negv2.exe
 *.exe
+trees/tempCodeRunnerFile.c
+*.o
+test2/.vscode/tasks.json
+test2/.vscode/launch.json
