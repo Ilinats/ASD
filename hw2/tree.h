@@ -8,10 +8,10 @@
 
 typedef struct node {
     char npcLine[MAX_LEN];
-    List *replies;
+    char **replies;
     List *next;
 } Node;
 
-Node init_node(char *line, List *playerReplies, List *nextNode);
+Node init_node(char *line, char **playerReplies, List *nextNode);
 
 #endif
