@@ -23,7 +23,6 @@ void resize(BinaryHeap *heap, int newCapacity) {
     heap->size = newCapacity;
 }
 
-
 void push_back(BinaryHeap *heap, int val) {
     resize(heap, heap->size+1);
 

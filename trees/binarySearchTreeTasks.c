@@ -141,15 +141,17 @@ void deleteAllLeaves(Node *tree) {
     if (tree == NULL)
         return;
 
+    int h = height(tree);
+
     deleteAllLeaves(tree->left);
     deleteAllLeaves(tree->right);
 
-    if (tree->left != NULL) {
+    if (tree->left != NULL && h > 2) {
         free(tree->left);
         tree->left = NULL;
     } 
     
-    if (tree->right != NULL) {
+    if (tree->right != NULL && h > 2) {
         free(tree->right);
         tree->right = NULL;
     }

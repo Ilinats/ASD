@@ -33,6 +33,7 @@ BTree *init_tree() {
 
 void push(Node* tree, int val) {
     if(tree == NULL) {
+        Node *newNode = createNode(val);
         tree = newNode;
         return;
     }
