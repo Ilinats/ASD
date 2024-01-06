@@ -1,14 +1,22 @@
 #ifndef TREE_H
 #define TREE_H
 
-#define MAX_LEN 500
+typedef struct inventory {
+    char *name;
+    int quantity;
+    struct inventory *next;
+} Inventory;
 
 typedef struct node {
-    char npcLine[MAX_LEN];
+    char *npcLine;
     char **replies;
+    int replies_count;
+    char *requiredItem;
+    int requiredItemQuantity;
     struct node **next;
-} Node;
+    int next_count;
+ } Node;
 
-Node *init_node(char *line, char **playerReplies, Node **nextNode);
+Node *init_node(char *npcLine, char **replies, int replies_count, Node **next, int next_count, char *requiredItem, int requiredItemQuantity);
 
 #endif
