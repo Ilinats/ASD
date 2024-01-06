@@ -1,6 +1,56 @@
 #include <stdio.h>
 #include "tree.h"
 
+int play_dialogue(Node *node, Inventory *inventory) {
+    if(node == NULL) 
+        return 1;
+
+    if(node->requiredItem) {
+        int flag = 0;
+        inventory = use_inventory(inventory, node->requiredItem, node->requiredItemQuantity, &flag);
+
+        if(!flag)
+            return 0;
+    }
+
+    printf("%s\n\n", node->npcLine);
+
+    if(node->replies_count) {
+        if(node->replies_count == 1) {
+            printf("%s\n", node->replies[0]);
+            play_dialogue(node->next[0], inventory);
+            return 1;
+        }
+
+        for (int i = 0; i < node->replies_count; i++) {
+            printf("%d. %s", i + 1, node->replies[i]);
+
+            if(node->next[i] != NULL && node->next[i]->requiredItem)
+                printf(" (requires %d of %s)", node->next[i]->requiredItemQuantity, node->next[i]->requiredItem);
+
+            printf("\n");
+        }
+
+        int choice;
+        printf("Choose how to proceed: ");
+        scanf("%d", &choice);
+        printf("\n");
+        
+        if(choice > 0 && choice <= node->replies_count) {
+            if(!play_dialogue(node->next[choice - 1], inventory))
+                play_dialogue(node, inventory);
+        }
+        else {
+            printf("Incorrect choice!\n\n");
+            play_dialogue(node, inventory);
+        }
+
+    } else if(node->next_count == 1)
+        play_dialogue(node->next[0], inventory);
+
+    return 1;
+}
+
 int main() {
 
     Inventory *inventory = add_inventory(NULL, "map", 2);
