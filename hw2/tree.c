@@ -15,3 +15,13 @@ Node *init_node(char *npcLine, char **replies, int replies_count, Node **next, i
 
     return node;
 }
+
+Inventory *init_inventory(char *name, int quantity) {
+    Inventory *inventory = (Inventory *)malloc(sizeof(Inventory));
+
+    inventory->name = name;
+    inventory->quantity = quantity;
+    inventory->next = NULL;
+
+    return inventory;
+}

@@ -18,5 +18,6 @@ typedef struct node {
  } Node;
 
 Node *init_node(char *npcLine, char **replies, int replies_count, Node **next, int next_count, char *requiredItem, int requiredItemQuantity);
+Inventory *init_inventory(char *name, int quantity);
 
 #endif
