@@ -2,14 +2,16 @@
 #include <string.h>
 #include "tree.h"
 
-Node *init_node(char *line, char *playerReplies[], Node **nextNode) {
+Node *init_node(char *npcLine, char **replies, int replies_count, Node **next, int next_count, char *requiredItem, int requiredItemQuantity) {
     Node *node = (Node *)malloc(sizeof(Node));
-    strcpy(node->npcLine, line);
-    
-    for(int i = 0; playerReplies[i] != NULL; i++) {
-        strcpy(node->replies[i], playerReplies[i]);
-        node->next[i] = nextNode[i];
-    }
+
+    node->npcLine = npcLine;
+    node->replies = replies;
+    node->replies_count = replies_count;
+    node->next = next;
+    node->next_count = next_count;
+    node->requiredItem = requiredItem;
+    node->requiredItemQuantity = requiredItemQuantity;
 
     return node;
 }
