@@ -79,3 +79,12 @@ Inventory *use_inventory(Inventory *inventory, char *name, int quantity, int *fl
     printf("You don't have the required item (or enoght of it) %s in your inventory!\n\n", name);
     return inventory;
 }
+
+void printInventory(Inventory *inventory) {
+    Inventory *temp = inventory;
+
+    while(temp != NULL) {
+        printf("%s: %d\n", temp->name, temp->quantity);
+        temp = temp->next;
+    }
+}

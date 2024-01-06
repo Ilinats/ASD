@@ -21,5 +21,6 @@ Node *init_node(char *npcLine, char **replies, int replies_count, Node **next, i
 Inventory *init_inventory(char *name, int quantity);
 Inventory *add_inventory(Inventory *inventory, char *name, int quantity);
 Inventory *use_inventory(Inventory *inventory, char *name, int quantity, int *flag);
+void printInventory(Inventory *inventory);
 
 #endif
