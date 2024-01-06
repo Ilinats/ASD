@@ -25,3 +25,26 @@ Inventory *init_inventory(char *name, int quantity) {
 
     return inventory;
 }
+
+Inventory *add_inventory(Inventory *inventory, char *name, int quantity) {
+    Inventory *temp = inventory;
+    if (temp == NULL) {
+        inventory = init_inventory(strdup(name), quantity);
+        return inventory;
+    }
+
+    do {
+        if (strcmp(temp->name, name) == 0) {
+            temp->quantity += quantity;
+            return inventory;
+        }
+
+        temp = temp->next;
+    } while (temp != NULL);
+
+    temp = init_inventory(name, quantity);
+    temp->next = inventory;
+    inventory = temp;
+
+    return inventory;
+}
