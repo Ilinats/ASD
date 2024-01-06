@@ -48,3 +48,34 @@ Inventory *add_inventory(Inventory *inventory, char *name, int quantity) {
 
     return inventory;
 }
+
+Inventory *use_inventory(Inventory *inventory, char *name, int quantity, int *flag) {
+    if(!inventory)
+        return NULL;
+
+    Inventory *temp = inventory;
+    Inventory *prev = NULL;
+
+    while(temp) {
+        if(strcmp(temp->name, name) == 0 && temp->quantity >= quantity) {
+            printf("You used %s from your inventory!\n\n", name);
+            *flag = 1;
+            temp->quantity -= quantity;
+            
+            if(temp->quantity < 1) {
+                if(prev)
+                    prev->next = temp->next;
+                else
+                    inventory = temp->next;
+
+                free(temp);
+                return inventory;
+            }
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+
+    printf("You don't have the required item (or enoght of it) %s in your inventory!\n\n", name);
+    return inventory;
+}
