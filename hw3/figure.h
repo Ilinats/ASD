@@ -1,26 +1,19 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
-typedef struct figure {
+typedef struct center {
     float x;
     float y;
+} Center;
+
+typedef struct Figure {
+    Center center;
     char *name;
+    int sideLen;
+    int radius;
 } Figure;
 
-typedef struct square {
-    Figure center;
-    float sideLen;
-} Square;
-
-typedef struct circle {
-    Figure center;
-    float radius;
-} Circle;
-
-Square *createSquare(Figure coordinates, float len);
-Circle *createCircle(Figure coordinates, float r);
-int squareOverlap(Square sq1, Square sq2);
-int circleOverlap(Circle c1, Circle s2);
-int areOverlaped(Square sq, Circle c);
+Figure *createFigure(Center *center, char *name, int sideLen, int radius);
+int areOverlaped(Figure fig1, Figure fig2);
 
 #endif
