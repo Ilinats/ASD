@@ -1,19 +1,33 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
-typedef struct center {
+typedef enum{
+    CIRCLE,
+    SQUARE
+} FigureType;
+
+typedef struct {
     float x;
     float y;
-} Center;
-
-typedef struct Figure {
-    Center center;
     char *name;
-    int sideLen;
-    int radius;
+    FigureType type;
 } Figure;
 
-Figure *createFigure(Center *center, char *name, int sideLen, int radius);
-int areOverlaped(Figure fig1, Figure fig2);
+typedef struct {
+    Figure base;
+    int sideLen;
+} Square;
+
+typedef struct {
+    Figure base;
+    int radius;
+} Circle;
+
+Circle *createCircle(float x, float y, int radius);
+Square *createSquare(float x, float y, int sideLen);
+int circlesOverlap(Circle *fig1, Circle *fig2);
+int squaresOverlap(Square *fig1, Square *fig2);
+int circleAndSquareOverlap(Circle *circle, Square *square);
+int overlap(Figure *fig1, Figure *fig2);
 
 #endif
