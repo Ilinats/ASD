@@ -40,6 +40,38 @@ void printGraph(Graph *graph) {
     }
 }
 
+int isThereUniversalSink(Graph* g) {
+    int flag = 0;
+    int noNext = -1;
+
+    for(int i = 0; i < g->numVertices; i++) {
+        for(int j = 0; j < g->numVertices; j++) {
+            if(g->adjMatrix[i][j]) {
+                flag = 1;
+                break;
+            }
+        }
+
+        if(flag == 0) {
+            noNext = i;
+            break;
+        }
+    }
+
+    for(int i = 0; i < g->numVertices; i++) {
+        if(i == noNext)
+            continue;
+
+        if(!g->adjMatrix[i][noNext])
+            return 0;
+    }
+
+    if(noNext == -1)
+        return 0;
+
+    return 1;
+}
+
 int main() {
     Graph *graph = init_graph(4);
     addEdge(graph, 0, 1);
@@ -50,6 +82,16 @@ int main() {
     addEdgeDirectional(graph, 0, 0);
 
     printGraph(graph);
+    printf("\n");
+    printf("%d\n", isThereUniversalSink(graph));
+
+    Graph* g = init_graph(4);
+    addEdge(g, 1, 2);
+    addEdgeDirectional(g, 1, 0);
+    addEdgeDirectional(g, 2, 0);
+    addEdgeDirectional(g, 3, 0);
+    addEdge(g, 2, 3);
+    printf("%d\n", isThereUniversalSink(g));
 
     return 0;
 }
