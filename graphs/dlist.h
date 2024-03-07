@@ -24,6 +24,7 @@ int pop(DList *);
 void printDList(DList *);
 void printDListReverse(DList *);
 int popFront(DList *);
+int search(DList *l, int val);
 
 void insertAt(DList *, NodeTree *, NodeTree *);
 
