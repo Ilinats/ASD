@@ -226,3 +226,20 @@ int removeAt(DList *l, NodeTree *val)
 
     return val->value;
 }
+
+int search(DList *l, int val)
+{
+    NodeTree *it = l->head;
+
+    while (it != NULL)
+    {
+        if (it->value == val)
+        {
+            return 1;
+        }
+
+        it = it->next;
+    }
+
+    return 0;
+}
