@@ -149,6 +149,24 @@ int isThereUniversalSink(Graph* g) {
     return 1;
 }
 
+void edgesInArr(Graph* g, int* arr) {
+    int index = 0;
+    for(int i = 0; i < g->numVertices; i++) {
+        Node* current = g->adjList[i];
+        while(current) {
+            if(current->next) {
+                arr[index++] = current->val;
+                arr[index++] = current->next->val;
+            }
+            current = current->next;
+        }
+    }
+
+    for(int i = 0; i < index; i++) {
+        printf("%d ", arr[i]);
+    }
+}
+
 int main() {
     Graph *graph = init_graph(6);
     addEdge(graph, 0, 1);
@@ -179,6 +197,8 @@ int main() {
     //printGraph(g);
     printf("test");
     printf("\nIS SINK %d\n", isThereUniversalSink(g));
+    int arr[100];
+    edgesInArr(graph, arr);
 
     return 0;
 }
