@@ -1,47 +1,53 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "xor.c" //TODO: xor.h vmesto xor.c
 
-void getKey(char* keyString, const char* keyName) {
-    FILE* key = fopen(keyName, "r");
+typedef struct card {
+	char value;
+	char color;
+} Card;
 
-    if (key == NULL) {
-        printf("Error opening file\n");
-        exit(1);
-    }
+typedef struct deck {
+    Card cards[52];
+} Deck;
 
-    fgets(keyString, 100, key);
+Card* createCard(char value, char color) {
+    Card* card = (Card*)malloc(sizeof(Card));
+    card->value = value;
+    card->color = color;
+    return card;
 }
 
-void fileXOR(const char* readName, const char* writeName, char key[100]) {
-    char c;
-    int keyLength = strlen(key);
-    int keyIndex = 0;
-
-    FILE* read = fopen(readName, "rb");
-    FILE* write = fopen(writeName, "wb");
-
-    if(read == NULL || write == NULL) {
-        printf("Error opening file\n");
-        exit(1);
+Deck* createDeck(const char* deckName) {
+    Deck* deck = (Deck*)malloc(sizeof(Deck));
+    FILE* deckFile = fopen(deckName, "r");
+    
+    if (deckFile == NULL) {
+        perror("Error opening file");
+        return NULL;
     }
 
-    while ((c = fgetc(read)) != EOF) {
-        c ^= key[keyIndex];
-        keyIndex = (keyIndex + 1) % keyLength;
-        //printf("%d", c == EOF);
-        fputc(c, write);
-    }
+    int counter = 0;
+    printf("Deck file: %s\n", deckName);
 
-    fclose(read);
-    fclose(write);
+    while (counter < 52 && fscanf(deckFile, " %c %c", &deck->cards[counter].value, &deck->cards[counter].color) == 2)
+        counter++;
+
+    fclose(deckFile);
+
+    for (int i = 0; i < counter; i++)
+        printf("%c %c\n", deck->cards[i].value, deck->cards[i].color);
+
+    return deck;
 }
 
 int main() {
     char keyString[100];
-    getKey(keyString, "key.txt");
+    getKey(keyString, "key.txt", 100);
     fileXOR("deck.txt", "encrypted.txt", keyString);
     fileXOR("encrypted.txt", "decrypted.txt", keyString);
+
+    Deck* deck = createDeck("decrypted.txt");
 
     return 0;
 }
